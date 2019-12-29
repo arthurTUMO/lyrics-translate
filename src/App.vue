@@ -3,8 +3,8 @@
     <Menu/>
     <v-content>
       <router-view></router-view>
-      <Footer/>
     </v-content>
+    <Footer/>
   </v-app>
 </template>
 
