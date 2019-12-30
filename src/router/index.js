@@ -5,6 +5,7 @@ import Artists from '../views/Artists.vue'
 import Songs from '../views/Songs.vue'
 import Login from '../views/Login.vue'
 import Registration from '../views/Registration.vue'
+import Display from '../views/Display.vue'
 
 Vue.use(VueRouter)
 
@@ -41,6 +42,11 @@ const routes = [
     path: '/registration',
     name: 'registration',
     component: Registration
+  },
+  {
+    path: '/display/:id',
+    name: 'display',
+    component: Display
   },
 ]
 

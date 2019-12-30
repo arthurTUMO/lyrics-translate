@@ -135,6 +135,7 @@
     data: () => ({
       show: false,
       searchShow: false,
+      searchText: null,
       items: [
         { title: 'English' },
         { title: 'Russian' },
@@ -142,10 +143,6 @@
         { title: 'French' },
       ]
     }),
-    name: 'Song',
-  props: {
-    msg: String
-  },
     translations: [
       { language: 'English', author: 'Matthew Bofenkamp' },
       {  language: 'Spanish', author: 'Arthur' }

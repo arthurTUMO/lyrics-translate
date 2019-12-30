@@ -24,7 +24,7 @@
             <v-col cols="12" class="text-center">
               <v-btn
                 v-for="link in links"
-                :key="link"
+                :key="link.route"
                 class="mx-2"
                 :to="link.route"
                 text
