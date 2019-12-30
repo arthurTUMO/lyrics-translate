@@ -1,11 +1,16 @@
 <template>
-  <div id="songs">
+  <v-container fluid fill-height class="grey darken-3 pb-10">
     <v-row class="text-center" justify="center">
       <v-col cols="12">
         <h2 class="white--text">Songs on Lyrics-Translate</h2>
       </v-col>
     </v-row>
-    <v-row justify="center">
+    <v-row v-if="loading" justify="center">
+      <v-col cols="1">
+        <v-progress-circular indeterminate :size="70" :width="7" color="indigo"></v-progress-circular>
+      </v-col>
+    </v-row>
+    <v-row v-if="!loading" justify="center">
       <v-col cols="12" md="10">
         <v-data-table
           :headers="headers"
@@ -23,90 +28,29 @@
         </v-data-table>
       </v-col>
     </v-row>
-  </div>
+  </v-container>
 </template>
 
 <script>
+import axios from 'axios'
+
   export default {
     name: 'songs',
     data: () => ({
-      headers: [
-        {
-          text: 'Song Title',
-          align: 'left',
-          value: 'title'
-        },
-        {
-          text: 'Artist',
-          value: 'artist'
-        },
-        {
-          text: 'Language',
-          value: 'language'
-        }
-      ],
-      songs: [
-        {
-          title: 'Tun Im Hayreni',
-          artist: 'Arabo Ispiryan',
-          language: 'Armenian',
-          id: 1
-        },
-        {
-          title: 'Mi Gna',
-          artist: 'Super Sako',
-          language: 'Armenian',
-          id: 2
-        },
-        {
-          title: 'Pregomesh',
-          artist: 'Sirusho',
-          language: 'Armenian',
-          id: 3
-        },
-        {
-          title: 'Anapati Arev',
-          artist: 'Tata Simonyan',
-          language: 'Armenian',
-          id: 4
-        },
-        {
-          title: 'Masis',
-          artist: 'Aram Asatryan',
-          language: 'Armenian',
-          id: 5
-        },
-        {
-          title: 'Mediterráneo',
-          artist: 'Joan Manuel Serrat',
-          language: 'Spanish',
-          id: 6
-        },
-        {
-          title: 'Il tempo se ne va',
-          artist: 'Adriano Celentano',
-          language: 'Italian',
-          id: 7
-        },
-        {
-          title: 'Komarovo',
-          artist: 'Igor Skylar',
-          language: 'Russian',
-          id: 8
-        },
-        {
-          title: 'Soledad y el mar',
-          artist: 'Natalia Lafourcade',
-          language: 'Spanish',
-          id: 9
-        },
-        {
-          title: 'Vagabundear',
-          artist: 'Joan Manuel Serrat',
-          language: 'Spanish',
-          id: 10
-        }
-      ]
-    })
+      headers: null,
+      songs: null,
+      loading: true
+    }),
+    async created() {
+      axios.get('http://localhost:4000/getSongs')
+        .then((response) => {
+          this.headers = response.data['headers']
+          this.songs = response.data['songs']
+          this.loading = false
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
   }
 </script>

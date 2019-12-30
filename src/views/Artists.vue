@@ -1,11 +1,16 @@
 <template>
-  <div id="artists">
+  <v-container fluid fill-height class="grey darken-3 pb-10">
     <v-row class="text-center" justify="center">
       <v-col cols="12">
         <h2 class="white--text">Artists on Lyrics-Translate</h2>
       </v-col>
     </v-row>
-    <v-row class="text-center">
+    <v-row v-if="loading" justify="center">
+      <v-col cols="1">
+        <v-progress-circular indeterminate :size="70" :width="7" color="indigo"></v-progress-circular>
+      </v-col>
+    </v-row>
+    <v-row v-if="!loading" class="text-center">
       <v-col cols="12" sm="6" md="4" lg="3" v-for="(artist, i) in artists" :key="i">
         <v-card dark shaped hover color="grey darken-1" class="px-5">
           <v-card-title class="my-0 pb-0">
@@ -49,20 +54,26 @@
         </v-card>
       </v-col>
     </v-row>
-  </div>
+  </v-container>
 </template>
 
 <script>
+import axios from 'axios'
   export default {
     name: 'artists',
     data: () => ({
-      artists: [
-        {name: 'Arabo Ispiryan', id: '1', img: 'https://i.ytimg.com/vi/bxOzCo4we_g/maxresdefault.jpg'},
-        {name: 'Super Sako', id: '2', img: 'http://asbarez.com/wp-content/uploads/2017/06/FullSizeRender-2.jpg'},
-        {name: 'Sirusho', id: '3', img: 'https://armeniagogo.com/wp-content/uploads/2016/12/sirusho-e1481819915997.jpg'},
-        {name: 'Tata Simonyan', id: '4', img: 'https://i.ytimg.com/vi/F01XfVh9C1E/maxresdefault.jpg'},
-        {name: 'Aram Asatryan', id: '5', img: 'https://i.ytimg.com/vi/0NPZb8wqwVo/hqdefault.jpg'}
-      ]
-    })
+      artists: null,
+      loading: true
+    }),
+    async created() {
+      axios.get('http://localhost:4000/getArtists')
+        .then((response) => {
+          this.artists = response.data['artists']
+          this.loading = false
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
   }
 </script>

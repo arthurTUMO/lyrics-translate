@@ -1,6 +1,12 @@
 <template>
+  <v-container fluid fill-height class="grey darken-3 pb-10">
+    <v-row v-if="loading" justify="center">
+      <v-col cols="1">
+        <v-progress-circular indeterminate :size="70" :width="7" color="indigo"></v-progress-circular>
+      </v-col>
+    </v-row>
     <v-row justify="center">
-      <v-col cols="12" md="11">
+      <v-col v-if="!loading" cols="12" md="11">
         <v-card flat class="grey darken-3">
           <v-card-title style="word-break: normal">
             <h1 class="a">{{ songInfo.title }} ({{ currentLanguage }}) Translation</h1>
@@ -26,15 +32,13 @@
         <v-card flat class="grey darken-3">
           <v-row align="center" justify="center">
             <v-col cols="8" sm="4" md="2">
-              <v-card-title class="a justify-center">About the Translator</v-card-title>
+              <v-card-title style="word-break: normal" class="a justify-center">About the Translator</v-card-title>
               <v-img class="text-center" width="100%" src="https://lyricstranslate.com/files/styles/avatar/public/avatar-default-u.png?itok=3fdQPvOS"></v-img>
             </v-col>
             <v-col cols="12" md="6">
               <v-card-text class="white--text">
                 <ul>
                   <li><b>Name: </b> {{ currentTranslator.firstName + ' ' + currentTranslator.lastName }}</li>
-                  <li><b>Role: </b> {{ currentTranslator.role }}</li>
-                  <li><b>Contribution: </b>{{ currentTranslator.translationCount }} translations, {{ currentTranslator.transliterations }} transliteration, thanked {{ currentTranslator.thankCount }} times, solved {{ currentTranslator.solvedRequests}} requests, helped {{ currentTranslator.helpedMembers }} members</li>
                   <li><b>Languages: </b>{{ currentTranslator.languages.toString() }}</li>
                 </ul>
               </v-card-text>
@@ -70,112 +74,38 @@
         <p class="white--text">Submitted by <a class="a" href="#">{{ currentTranslator.firstName + ' ' + currentTranslator.lastName }}</a> on {{ songInfo[currentLanguage].date }}</p>
       </v-col>
     </v-row>
+  </v-container>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'Display',
   data: () => ({
     hover: [],
-    currentTranslator: {
-      firstName: 'Mathew',
-      lastName: 'Bfenkamp',
-      role: 'Member',
-      translationCount: 9,
-      transliterations: 1,
-      thankCount: 74,
-      solvedRequests: 3,
-      helpedMembers: 4,
-      languages: ['English', 'Armenian', 'Norwegian']
-    },
-    songInfo: {
-      title: 'Tun Im Hayreni',
-      artist: 'Arabo Ispiryan (Արաբո Իսպիրյան)',
-      translations: ['English'],
-      English: {
-        translatorId: 1,
-        title: 'My Fatherly Home',
-        date: 'Tuesday',
-        lyrics: [
-          'I\'m longing for my fatherly home,',
-          'You\'re the fortress of powerful fathers',
-          'You\'re the chapel of our tender mothers, fatherland',
-          'I\'m praying may God protect you.',
-          'You\'re the chapel of our tender mothers, fatherland',
-          'I\'m praying may God protect you.',
-          'Strangeness separate from my life',
-          'I’m living fearless of my Armenian soul',
-          'I’ll return and embrace you, hold on to you',
-          'I’m afraid I won’t fulfill my longing',
-          'I’ll return and embrace you, hold on to you',
-          'I’m afraid I won’t fulfill my longing.',
-          'They’ve seized you, plundered you, detained you',
-          'They’ve ruined your monasteries, my fatherly home',
-          'I’ll wash your cross stones (khachkars) with my tears',
-          'I’m begging, call me, let me come back home',
-          'I’ll wash your cross stones (khachkars) with my tears',
-          'I’m begging, call me, let me come back home.',
-          'You’ve become a slave to foreigners',
-          'Your children slaves to foreigners',
-          'Ice has formed, hardened in your warm heart',
-          'Your springs have become autumns',
-          'Ice has formed, hardened in your warm heart',
-          'Your springs have become autumns.',
-          'They’ve seized you, plundered you, detained you',
-          'They’ve ruined your monasteries, my fatherly home',
-          'I’ll wash your cross stones (khachkars) with my tears',
-          'I’m begging, call me, let me come back home.',
-          'I’ll wash your cross stones (khachkars) with my tears',
-          'I’m begging, call me, let me come back home.',
-          'I’m begging, call me, let me come back home.'
-        ]
-      },
-      Armenian: {
-        translatorId: 0,
-        title: 'Tun Im Hayreni',
-        date: 'Tuesday',
-        lyrics: [
-          'Կարոտում եմ տուն իմ հայրենի',
-          'Դու ամրոցն ես հզոր հայրերի',
-          'Դու մատուռն ես դու մեր քնքուշ մայրերի, հայրենիք',
-          'Աղոթում եմ Աստված պահպանի։',
-          'Դու մատուռն ես դու մեր քնքուշ մայրերի, հայրենիք',
-          'Աղոթում եմ Աստված պահպանի։',
-          'Օտարություն իմ կյանքից անկախ',
-          'Հայի ոգով ապրում եմ անվախ',
-          'Ես կդառնամ ու իմ գիրկը քեզ կառնեմ, կփարվեմ',
-          'Վախենում եմ կարոտս չառնեմ։',
-          'Ես կդառնամ ու իմ գիրկը քեզ կառնեմ, կփարվեմ',
-          'Վախենում եմ կարոտս չառնեմ։',
-          'Քեզ խլել են, թալանել են, կալանել են',
-          'Քո վանքերը, ավիրել են տուն իմ հայրենի',
-          'Խաչքարերդ արցունքներով կլվանամ',
-          'Աղաչում եմ, կանչիր, թույլ տուր տուն դառնամ:',
-          'Խաչքարերդ արցունքներով կլվանամ',
-          'Աղաչում եմ, կանչիր, թույլ տուր տուն դառնամ։',
-          'Դու դարծել ես օտարի գերի',
-          'Որդիներդ գերի օտարին',
-          'Քո տաք սրտում սառույցներ են գոյացել, քարացել',
-          'Գարուններդ աշուն են դարձել:',
-          'Քո տաք սրտում սառուցներ են գոյացել, քարացել',
-          'Գարուններդ աշուն են դարձել։',
-          'Քեզ խլել են, թալանել են, դարանել են',
-          'Քո վանքերը ավիրել են տուն իմ հայրենի',
-          'Խաչքարերդ արցունքներով կլվանամ',
-          'Աղաչում եմ կանչիր, թույլ տուր տուն դառնամ:',
-          'Խաչքարերտ արցունքներով կլվանամ',
-          'Աղաչում եմ կանչիր, թույլ տուր տուն դառնամ։',
-          'Աղաչում եմ, կանչիր, թույլ տուր տուն դառնամ...'
-        ]
-      }
-    },
-    currentLanguage: 'English',
-    originalLanguage: 'Armenian'
+    songInfo: null,
+    currentLanguage: null,
+    originalLanguage: null,
+    currentTranslator: null,
+    loading: true
   }),
-  created() {
-    for (var i = 0; i < this.songInfo[this.currentLanguage].lyrics.length; i++) {
-      this.hover.push(false)
-    }
+  async created() {
+    axios.get('http://localhost:4000/getSongInfo')
+      .then((response) => {
+        this.songInfo = response.data['songInfo']
+        this.originalLanguage = this.songInfo.originalLanguage
+        this.currentLanguage = this.songInfo.translations[0]
+        let translatorId = this.songInfo[this.currentLanguage].translatorId
+        return axios.get(`http://localhost:4000/getTranslatorInfo/${translatorId}`)
+      })
+      .then((response) => {
+        this.currentTranslator = response.data['currentTranslator']
+        for (var i = 0; i < this.songInfo[this.currentLanguage].lyrics.length; i++) {
+          this.hover.push(false)
+        }
+        this.loading = false
+      })
   },
   methods: {
     hoverSelect: function (i) {
