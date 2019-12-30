@@ -2,7 +2,7 @@
   <v-app>
     <Menu/>
     <v-content>
-      <v-container fluid class="grey darken-3">
+      <v-container fluid class="grey darken-3 pb-10">
         <router-view></router-view>
       </v-container>
     </v-content>

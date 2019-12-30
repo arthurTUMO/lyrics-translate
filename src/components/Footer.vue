@@ -10,6 +10,7 @@
         tile
         color="indigo"
         width="100%"
+        class="mt-0"
       >
         <v-card-text>
           <v-row justify="center">
