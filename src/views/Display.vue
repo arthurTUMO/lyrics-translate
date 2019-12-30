@@ -1,5 +1,4 @@
 <template>
-  <v-container fluid class="grey darken-3">
     <v-row justify="center">
       <v-col cols="12" md="11">
         <v-card flat class="grey darken-3">
@@ -71,8 +70,6 @@
         <p class="white--text">Submitted by <a class="a" href="#">{{ currentTranslator.firstName + ' ' + currentTranslator.lastName }}</a> on {{ songInfo[currentLanguage].date }}</p>
       </v-col>
     </v-row>
-  </v-container>
-
 </template>
 
 <script>
