@@ -2,7 +2,7 @@
     <div id="menu">
         <v-app-bar app color="indigo" dark>
         <v-app-bar-nav-icon class="hidden-md-and-up" @click.stop="show = !show"></v-app-bar-nav-icon>
-        <v-toolbar-title class="hidden-sm-and-down" @click="$router.push('/')">Lyrics App</v-toolbar-title>
+        <v-toolbar-title class="clickable hidden-sm-and-down" @click="$router.push('/')">Lyrics App</v-toolbar-title>
         <!-- <v-img src="./assets/flooop.png" /> -->
         <v-spacer></v-spacer>
         <v-toolbar-items>
