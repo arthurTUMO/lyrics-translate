@@ -8,6 +8,7 @@
     <v-row v-if="loading" justify="center">
       <v-col cols="1">
         <v-progress-circular indeterminate :size="70" :width="7" color="indigo"></v-progress-circular>
+        <h1 class="white--text">{{ error }} </h1>
       </v-col>
     </v-row>
     <v-row v-if="!loading" class="text-center">
@@ -63,16 +64,18 @@ import axios from 'axios'
     name: 'artists',
     data: () => ({
       artists: null,
-      loading: true
+      loading: true,
+      error: null
     }),
     async created() {
-      axios.get('http://localhost:4000/getArtists')
+      axios.get('https://lyrics-site.herokuapp.com/getArtists')
         .then((response) => {
           this.artists = response.data['artists']
           this.loading = false
         })
         .catch((error) => {
-          console.log(error)
+          this.error = error
+          this.loading = true
         })
     }
   }

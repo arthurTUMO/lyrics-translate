@@ -91,13 +91,13 @@ export default {
     loading: true
   }),
   async created() {
-    axios.get('http://localhost:4000/getSongInfo')
+    axios.get('https://lyrics-site.herokuapp.com/getSongInfo')
       .then((response) => {
         this.songInfo = response.data['songInfo']
         this.originalLanguage = this.songInfo.originalLanguage
         this.currentLanguage = this.songInfo.translations[0]
         let translatorId = this.songInfo[this.currentLanguage].translatorId
-        return axios.get(`http://localhost:4000/getTranslatorInfo/${translatorId}`)
+        return axios.get(`https://lyrics-site.herokuapp.com/getTranslatorInfo/${translatorId}`)
       })
       .then((response) => {
         this.currentTranslator = response.data['currentTranslator']

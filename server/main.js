@@ -9,13 +9,13 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
-// app.use(serveStatic(path.join(__dirname, '..', '/dist')));
-// // Inserted this so that client-side routing works
-// app.use(history({
-//     verbose: true
-// }));
-// // Documentation for connect-history-api-fallback requires this again...
-// app.use(serveStatic(path.join(__dirname, '..', '/dist')));
+app.use(serveStatic(path.join(__dirname, '..', '/dist')));
+// Inserted this so that client-side routing works
+app.use(history({
+    verbose: true
+}));
+// Documentation for connect-history-api-fallback requires this again...
+app.use(serveStatic(path.join(__dirname, '..', '/dist')));
 
 app.get('/getArtists', (req, res) => {
   let response = {
