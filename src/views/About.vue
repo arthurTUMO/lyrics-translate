@@ -1,5 +1,9 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <v-container fluid fill-height class="grey darken-3 pl-9 pb-10">
+    <v-row class="text-center" justify="center">
+      <v-col cols="12">
+        <h2 class="white--text">About Page</h2>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>

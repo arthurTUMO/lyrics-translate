@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid fill-height class="grey darken-3 pb-10">
+  <v-container fluid fill-height class="grey darken-3 pl-9 pb-10">
     <v-row v-if="loading" justify="center">
       <v-col cols="1">
         <v-progress-circular indeterminate :size="70" :width="7" color="indigo"></v-progress-circular>

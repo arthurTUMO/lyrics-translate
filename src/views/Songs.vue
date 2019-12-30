@@ -1,12 +1,12 @@
 <template>
-  <v-container fluid fill-height class="grey darken-3 pb-10">
+  <v-container fluid fill-height class="grey darken-3 pl-9 pb-10">
     <v-row class="text-center" justify="center">
       <v-col cols="12">
         <h2 class="white--text">Songs on Lyrics-Translate</h2>
       </v-col>
     </v-row>
-    <v-row v-if="loading" justify="center">
-      <v-col cols="1">
+    <v-row v-if="loading" class="text-center" justify="center">
+      <v-col cols="4">
         <v-progress-circular indeterminate :size="70" :width="7" color="indigo"></v-progress-circular>
         <h1 class="white--text">{{ error }} </h1>
       </v-col>
